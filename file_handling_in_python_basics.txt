@@ -1,0 +1,143 @@
+1) Opening:
+   with open(first parameter:file_name,second_parameter: mode(read, write or both)) as vaiable_name. 
+   This way we can open file in python to access its content
+   
+   Another way of opening file is: just open without with. 
+   But in this you need to add close() command at last to break the connection with the file.
+   Syntax: variable_name=open(file_name,mode). 
+   Possible mode values can be r(read only), w(open for wrting), r+(Open for reading and writing), a(open for appending or adding data)
+   AND if you want to read in binary format than rb,rb+,wb,ab
+   example: 1) file=open("txt_file",mode='r')
+            content=file.readlines()      or file.read() or print(a.readline())--> returns the first line from the document
+            print(content)
+            file.close()
+
+    To create a new file in Python, use the open() method, with one of the following parameters:
+
+    ‘x’ - Create - will create a file, returns an error if the file exists.
+
+    ‘a’ - Append - will create a file if the specified file does not exist.
+
+    ‘w’ - Write - will create a file if the specified file does not exist.
+
+2) Writing Strings to Files: To write a string to a file, we can use the write() method. 
+    This method takes a string as input and writes it to the file. If the file doesn't exist, it will be created. 
+    If it already exists, the existing content will be overwritten. Here's an example:
+    with open('output.txt', 'w') as file:
+        file.write("Hello, World!")      or file.writelines("Hello","Priya","Gupta") - Writing Multiple Lines to Files
+
+3) Appending to Files: Appending data to a file is useful when you want to add new content to an existing file 
+    without overwriting its previous contents. Python provides the ‘append’ mode (‘a’) for this purpose. 
+    with open('example.txt', 'a') as file:
+        file.write("New content to append")
+    
+4) Renaming a File: To rename a file, we can use the os.rename() function from the os module. 
+    This function takes two arguments: the current name of the file and the new name to assign. Here's an example:
+    import os
+    current_name = 'old_name.txt'
+    new_name = 'new_name.txt'
+    os.rename(current_name, new_name)
+    
+5) Deleting a File: To delete a file, we can use the os.remove() function from the os module. 
+    This function takes the name of the file as an argument. Here's an example:
+    import os
+    file_to_delete = 'file_to_delete.txt'
+    os.remove(file_to_delete)
+
+Working with File Pointers:
+
+
+1) Getting the Current File Position: To determine the current position of the file pointer within a file, we can use the tell() method.
+   This method returns the current file position as an integer. Here's an example:
+    with open('example.txt', 'r') as file:
+        position = file.tell()
+        print(f"Current position: {position}")
+
+
+2) Moving the File Pointer: Python provides the seek() method to move the file pointer to a specific position within a file. 
+   The seek() method takes two arguments: the offset (number of bytes to move) and the optional whence parameter that defines the reference point for seeking. Here's an example:
+    with open('example.txt', 'r') as file:
+        file.seek(10)  # Move the pointer to the 10th byte position
+        data = file.read()
+        print(data)
+
+
+The whence parameter in the seek() method can take three values:
+
+0: Seek relative to the beginning of the file (default).
+1: Seek relative to the current position of the file pointer.
+2: Seek relative to the end of the file.
+For example, to move the file pointer 10 bytes backward from the current position, we can use file.seek(-10, 1).
+
+Understanding and manipulating the file pointer allows you to navigate through files and perform specific operations at desired locations. Next, let’s delve into the various file modes and file objects in Python.
+
+Manipulating File Positions:
+
+In file handling, it’s often necessary to manipulate the position of the file pointer within a file. 
+Python provides methods to move the file pointer to a specific location, retrieve the current position, 
+or determine the size of the file. Let’s explore these file position manipulation techniques:
+
+1) Moving the File Pointer to a Specific Position: The seek() method allows us to move the file pointer to a specific position 
+   within the file. It takes two arguments: the offset (number of bytes to move) and the hence parameter that specifies the reference point for seeking. Here's an example:
+    with open('example.txt', 'r') as file:
+        file.seek(10)  # Move the pointer to the 10th byte position
+        data = file.read()
+        print(data)
+
+
+2) Retrieving the Current File Position: To determine the current position of the file pointer within a file, we can use the tell() method. This method returns the current file position as an integer. Here's an example:
+    with open('example.txt', 'r') as file:
+        position = file.tell()
+        print(f"Current position: {position}")
+
+3) Determining the Size of a File: To determine the size of a file in bytes, we can use the seek() method in combination with the tell() method. Here's an example:
+    with open('example.txt', 'r') as file:
+        file.seek(0, 2)  # Move the pointer to the end of the file
+        size = file.tell()  # Get the current position (which is the size)
+        print(f"File size: {size} bytes")
+
+Organizing Files and Directories:
+1) Creating a Directory: To create a directory, we can use the os.mkdir() function from the os module. 
+   This function takes the name of the directory as an argument. Here's an example:
+    import os
+    directory_name = 'new_directory'
+    os.mkdir(directory_name)
+
+2) Navigating through Directories: To navigate through directories, we can use the os.chdir() function from the os module. 
+   This function takes the path of the directory to navigate to as an argument. Here's an example:
+    import os
+    directory_path = '/path/to/directory'
+    os.chdir(directory_path)
+
+3) Listing Files in a Directory: To retrieve a list of files within a directory, we can use the os.listdir() function from the os module. 
+   This function takes the path of the directory as an argument and returns a list of files and directories within that directory. 
+   Here's an example:
+    import os
+    directory_path = '/path/to/directory'
+    files = os.listdir(directory_path)
+    for file in files:
+        print(file)
+
+Exception Handling in File Operations:
+
+1) Handling File Not Found Errors: One common error when working with files is the “FileNotFoundError,” which occurs when attempting 
+   to open or access a file that doesn’t exist. We can handle this error using a try-except block. Here's an example:
+    try:
+        with open('nonexistent_file.txt', 'r') as file:
+            data = file.read()
+            print(data)
+    except FileNotFoundError:
+        print("The file does not exist.")
+
+2) Handling Other File Operation Errors: In addition to the “FileNotFoundError,” other errors can occur during file operations, 
+   such as “PermissionError” or “IOError.” We can handle these errors in a similar way by adding multiple except blocks to the 
+   try-except statement. Here's an example:
+    try:
+        with open('file.txt', 'r') as file:
+            # Perform file operations
+    except FileNotFoundError:
+        print("The file does not exist.")
+    except PermissionError:
+        print("Permission denied to access the file.")
+    except IOError:
+        print("An error occurred while performing file operations.")
